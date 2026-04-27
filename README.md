@@ -68,5 +68,3 @@ Right click → Open with Live Server
 ## Author
 
 **Paulina Rojas** — [@paulina-rc](https://github.com/paulina-rc)
-
-> Academic project — Web Development Specialization, 11th Grade
