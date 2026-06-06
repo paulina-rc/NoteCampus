@@ -1,0 +1,163 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="examentecnico.css">
+</head>
+<body>          
+    <header>
+        <nav class="container">
+            <div class="logo">StudyShare</div>
+            <ul class="nav-links">
+                <li><a href="#inicio">Home</a></li>
+                <li><a href="#materias">Subjects</a></li>
+                <li><a href="#grados">Grades</a></li>
+                <li><a href="#sobre">About us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero container">
+            <div class="hero-content">
+                <h1>Share knowledge, grow in community</h1>
+                <button class="cta-button">Enter your notes</button>
+            </div>
+            <div class="hero-image">
+                <div class="book-icon">
+                    <div class="book-lines">
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                    </div>
+                    <div class="pencil"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="popular-notes container">
+            <h2 class="section-title">Most visited notes</h2>
+            <div class="notes-grid">
+                <div class="note-card">
+                    <h3>Math notes</h3>
+                    <p class="note-grade"> Grade 10°</p>
+                    <button class="view-more-btn">See more</button>
+                </div>
+                <div class="note-card">
+                    <h3>Social studies notes</h3>
+                    <p class="note-grade">Grade 9°</p>
+                    <button class="view-more-btn">See more</button>
+                </div>
+                <div class="note-card">
+                    <h3>Biology notes</h3>
+                    <p class="note-grade">Grade 11°</p>
+                    <button class="view-more-btn">See more</button>
+                </div>
+                <div class="note-card">
+                    <h3>Programming notes</h3>
+                    <p class="note-grade">Grade 12°</p>
+                    <button class="view-more-btn">See more</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="subjects container">
+            <h2 class="section-title">Subjects</h2>
+            <div class="subjects-grid">
+                <div class="subject-card mathematics">
+                    <h3>Mathematics</h3>
+                </div>
+                <div class="subject-card history">
+                    <h3>Social Studies</h3>
+                </div>
+                <div class="subject-card sciences">
+                    <h3>Science</h3>
+                </div>
+                <div class="subject-card literature">
+                    <h3>Spanish</h3>
+                </div>
+                <div class="subject-card sciences">
+                    <h3>Biology</h3>
+                </div>
+                <div class="subject-card mathematics">
+                    <h3>Physics</h3>
+                </div>
+                <div class="subject-card history">
+                    <h3>Chemistry</h3>
+                </div>
+                <div class="subject-card sciences">
+                    <h3>Programming</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- Caja de comentarios -->
+        <section class="comments-section container">
+            <h2 class="section-title">Leave a Comment</h2>
+            <form class="comment-form">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+                <label for="comment">Comment:</label>
+                <textarea id="comment" name="comment" rows="4" placeholder="Write your comment here..." required></textarea>
+
+                <button type="submit" class="submit-btn">Send</button>
+            </form>
+
+            <!-- Lista de comentarios -->
+            <div class="comments-list">
+                <h3>Comments:</h3>
+                <ul id="comments"></ul>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Funcionalidad básica para los botones y comentarios
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctaButton = document.querySelector('.cta-button');
+            const viewMoreButtons = document.querySelectorAll('.view-more-btn');
+            const subjectCards = document.querySelectorAll('.subject-card');
+            const form = document.querySelector('.comment-form');
+            const commentsList = document.getElementById('comments');
+
+            ctaButton.addEventListener('click', function() {
+                alert('¡Bienvenido a StudyShare! Funcionalidad en desarrollo.');
+            });
+
+            viewMoreButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const noteTitle = this.parentElement.querySelector('h3').textContent;
+                    alert(`Viendo más detalles de: ${noteTitle}`);
+                });
+            });
+
+            subjectCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const subject = this.querySelector('h3').textContent;
+                    alert(`Explorando materiales de: ${subject}`);
+                });
+            });
+
+            // Manejo de comentarios
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const name = document.getElementById('name').value;
+                const comment = document.getElementById('comment').value;
+
+                if(name && comment){
+                    const li = document.createElement('li');
+                    li.innerHTML = `<strong>${name}:</strong> ${comment}`;
+                    commentsList.appendChild(li);
+
+                    form.reset(); // Limpia el formulario
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+                                                                                                                                 <!DOCTYPE html>
