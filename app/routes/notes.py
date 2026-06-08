@@ -20,6 +20,39 @@ def list_notes():
     )
 
 
+@notes.route("/notes/<int:note_id>")
+def note_detail(note_id):
+    note = Note.query.get_or_404(note_id)
+
+    return render_template(
+        "note_detail.html",
+        note=note
+    )
+
+
+@notes.route("/search")
+def search():
+    query = request.args.get("q", "").strip()
+    search_results = []
+
+    if query:
+        search_pattern = f"%{query}%"
+        search_results = Note.query.filter(
+            db.or_(
+                Note.title.ilike(search_pattern),
+                Note.description.ilike(search_pattern)
+            )
+        ).order_by(
+            Note.created_at.desc()
+        ).all()
+
+    return render_template(
+        "search_results.html",
+        query=query,
+        notes=search_results
+    )
+
+
 @notes.route("/upload-note", methods=["GET", "POST"])
 @login_required
 def upload_note():

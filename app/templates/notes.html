@@ -15,6 +15,11 @@
         <button>Upload Note</button>
     </a>
 
+    <form method="GET" action="{{ url_for('notes.search') }}">
+        <input type="search" name="q" placeholder="Search notes" required>
+        <button type="submit">Search</button>
+    </form>
+
     <hr>
 
     {% if subjects %}
@@ -44,7 +49,11 @@
                             {% for note in category.notes %}
 
                                 <div>
-                                    <h4>{{ note.title }}</h4>
+                                    <h4>
+                                        <a href="{{ url_for('notes.note_detail', note_id=note.id) }}">
+                                            {{ note.title }}
+                                        </a>
+                                    </h4>
                                     <p>{{ note.description }}</p>
                                     <p>Uploaded by: {{ note.author.username }}</p>
                                     <a href="{{ note.file_url }}" target="_blank">Open file</a>

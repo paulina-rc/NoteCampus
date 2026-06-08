@@ -27,7 +27,11 @@
         {% for note in category.notes %}
 
             <article>
-                <h3>{{ note.title }}</h3>
+                <h3>
+                    <a href="{{ url_for('notes.note_detail', note_id=note.id) }}">
+                        {{ note.title }}
+                    </a>
+                </h3>
                 <p>{{ note.description }}</p>
                 <p>Uploaded by: {{ note.author.username }}</p>
                 <a href="{{ note.file_url }}" target="_blank">Open file</a>

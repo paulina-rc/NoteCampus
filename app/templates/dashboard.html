@@ -21,6 +21,11 @@
         <button>View All Notes</button>
     </a>
 
+    <form method="GET" action="{{ url_for('notes.search') }}">
+        <input type="search" name="q" placeholder="Search notes" required>
+        <button type="submit">Search</button>
+    </form>
+
     <hr>
 
     <h2>My Notes</h2>
@@ -30,7 +35,11 @@
         {% for note in notes %}
 
             <article>
-                <h3>{{ note.title }}</h3>
+                <h3>
+                    <a href="{{ url_for('notes.note_detail', note_id=note.id) }}">
+                        {{ note.title }}
+                    </a>
+                </h3>
                 <p>{{ note.description }}</p>
                 <p>{{ note.subject.name }} / {{ note.category.name }}</p>
                 <a href="{{ note.file_url }}" target="_blank">Open file</a>

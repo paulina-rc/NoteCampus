@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+</head>
+
+<body>
+
+    <h1>Search Results</h1>
+
+    <form method="GET" action="{{ url_for('notes.search') }}">
+        <input type="search" name="q" placeholder="Search notes" value="{{ query }}" required>
+        <button type="submit">Search</button>
+    </form>
+
+    <hr>
+
+    {% if query %}
+
+        <p>Results for: {{ query }}</p>
+
+        {% if notes %}
+
+            {% for note in notes %}
+
+                <article>
+                    <h2>
+                        <a href="{{ url_for('notes.note_detail', note_id=note.id) }}">
+                            {{ note.title }}
+                        </a>
+                    </h2>
+                    <p>{{ note.description }}</p>
+                    <p>Uploaded by: {{ note.author.username }}</p>
+                    <p>{{ note.subject.name }} / {{ note.category.name }}</p>
+                    <a href="{{ note.file_url }}" target="_blank">Open file</a>
+                    <p>Created at: {{ note.created_at }}</p>
+                </article>
+
+                <hr>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p>No notes matched your search.</p>
+
+        {% endif %}
+
+    {% else %}
+
+        <p>Enter a search term to find notes.</p>
+
+    {% endif %}
+
+    <a href="{{ url_for('notes.list_notes') }}">Back to notes</a>
+
+</body>
+
+</html>
