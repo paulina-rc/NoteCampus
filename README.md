@@ -97,4 +97,4 @@ As I continue learning, I plan to keep expanding the project with new features a
 
 ## Author
 
-Paulina Rojas — @paulina-rc
+**Paulina Rojas** — [@paulina-rc](https://github.com/paulina-rc)
