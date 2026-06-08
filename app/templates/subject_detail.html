@@ -1,71 +1,72 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ subject.name }}</title>
-</head>
+{% block title %}{{ subject.name }} | StudyShare{% endblock %}
 
-<body>
+{% block content %}
+    <section class="page-heading">
+        <div>
+            <p class="eyebrow">Subject</p>
+            <h1>{{ subject.name }}</h1>
+            <p class="muted">{{ subject.description }}</p>
+        </div>
 
-    <h1>{{ subject.name }}</h1>
-
-    <p>{{ subject.description }}</p>
-
-    <a href="{{ url_for('subjects.list_subjects') }}">Back to subjects</a>
-
-    <hr>
-
-    <h2>Categories</h2>
+        <a class="button button-secondary" href="{{ url_for('subjects.list_subjects') }}">Back to subjects</a>
+    </section>
 
     {% if subject.categories %}
 
         {% for category in subject.categories %}
 
-            <section>
-                <h3>
-                    <a href="{{ url_for('subjects.category_detail', category_id=category.id) }}">
-                        {{ category.name }}
-                    </a>
-                </h3>
-
-                <p>{{ category.description }}</p>
+            <section class="category-block">
+                <div class="section-title">
+                    <h2>
+                        <a href="{{ url_for('subjects.category_detail', category_id=category.id) }}">
+                            {{ category.name }}
+                        </a>
+                    </h2>
+                    <p>{{ category.description }}</p>
+                </div>
 
                 {% if category.notes %}
 
-                    {% for note in category.notes %}
+                    <div class="grid grid-3">
+                        {% for note in category.notes %}
 
-                        <article>
-                            <h4>
-                                <a href="{{ url_for('notes.note_detail', note_id=note.id) }}">
-                                    {{ note.title }}
-                                </a>
-                            </h4>
-                            <p>{{ note.description }}</p>
-                            <p>Uploaded by: {{ note.author.username }}</p>
-                            <a href="{{ note.file_url }}" target="_blank">Open file</a>
-                        </article>
+                            <article class="note-card">
+                                <div class="card-meta">
+                                    <span>{{ note.subject.name }}</span>
+                                    <span>{{ note.category.name }}</span>
+                                </div>
+                                <h3>
+                                    <a href="{{ url_for('notes.note_detail', note_id=note.id) }}">
+                                        {{ note.title }}
+                                    </a>
+                                </h3>
+                                <p>{{ note.description }}</p>
+                                <div class="card-footer">
+                                    <span>{{ note.author.username }}</span>
+                                    <a href="{{ note.file_url }}" target="_blank">Open file</a>
+                                </div>
+                            </article>
 
-                    {% endfor %}
+                        {% endfor %}
+                    </div>
 
                 {% else %}
 
-                    <p>No notes in this category yet.</p>
+                    <p class="muted">No notes in this category yet.</p>
 
                 {% endif %}
             </section>
-
-            <hr>
 
         {% endfor %}
 
     {% else %}
 
-        <p>This subject does not have categories yet.</p>
+        <div class="empty-state">
+            <h2>No categories yet</h2>
+            <p>This subject does not have categories yet.</p>
+        </div>
 
     {% endif %}
-
-</body>
-
-</html>
+{% endblock %}

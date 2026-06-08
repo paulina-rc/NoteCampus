@@ -1,53 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ category.name }}</title>
-</head>
+{% block title %}{{ category.name }} | StudyShare{% endblock %}
 
-<body>
+{% block content %}
+    <section class="page-heading">
+        <div>
+            <p class="eyebrow">{{ category.subject.name }}</p>
+            <h1>{{ category.name }}</h1>
+            <p class="muted">{{ category.description }}</p>
+        </div>
 
-    <h1>{{ category.name }}</h1>
-
-    <p>{{ category.description }}</p>
-    <p>Subject: {{ category.subject.name }}</p>
-
-    <a href="{{ url_for('subjects.subject_detail', subject_id=category.subject.id) }}">
-        Back to {{ category.subject.name }}
-    </a>
-
-    <hr>
-
-    <h2>Notes</h2>
+        <a class="button button-secondary" href="{{ url_for('subjects.subject_detail', subject_id=category.subject.id) }}">
+            Back to {{ category.subject.name }}
+        </a>
+    </section>
 
     {% if category.notes %}
 
-        {% for note in category.notes %}
+        <section class="grid grid-3">
+            {% for note in category.notes %}
 
-            <article>
-                <h3>
-                    <a href="{{ url_for('notes.note_detail', note_id=note.id) }}">
-                        {{ note.title }}
-                    </a>
-                </h3>
-                <p>{{ note.description }}</p>
-                <p>Uploaded by: {{ note.author.username }}</p>
-                <a href="{{ note.file_url }}" target="_blank">Open file</a>
-                <p>Created at: {{ note.created_at }}</p>
-            </article>
+                <article class="note-card">
+                    <div class="card-meta">
+                        <span>{{ category.subject.name }}</span>
+                        <span>{{ category.name }}</span>
+                    </div>
+                    <h2>
+                        <a href="{{ url_for('notes.note_detail', note_id=note.id) }}">
+                            {{ note.title }}
+                        </a>
+                    </h2>
+                    <p>{{ note.description }}</p>
+                    <div class="card-footer">
+                        <span>{{ note.author.username }}</span>
+                        <span>{{ note.created_at.strftime('%b %d, %Y') if note.created_at else 'Recently' }}</span>
+                    </div>
+                </article>
 
-            <hr>
-
-        {% endfor %}
+            {% endfor %}
+        </section>
 
     {% else %}
 
-        <p>No notes in this category yet.</p>
+        <div class="empty-state">
+            <h2>No notes yet</h2>
+            <p>No notes in this category yet.</p>
+        </div>
 
     {% endif %}
-
-</body>
-
-</html>
+{% endblock %}

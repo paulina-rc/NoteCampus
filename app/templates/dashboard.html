@@ -1,61 +1,79 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-</head>
+{% block title %}Dashboard | StudyShare{% endblock %}
 
-<body>
+{% block content %}
+    {% set subject_total = notes|map(attribute='subject_id')|unique|list|length %}
 
-    <h1>Welcome to StudyShare</h1>
+    <section class="page-heading">
+        <div>
+            <p class="eyebrow">Dashboard</p>
+            <h1>Welcome back, {{ user.username }}</h1>
+            <p class="muted">Manage your academic resources and keep your shared notes organized.</p>
+        </div>
 
-    <p>You are logged in as {{ user.username }}.</p>
+        <div class="heading-actions">
+            <a class="button button-primary" href="{{ url_for('notes.upload_note') }}">Upload note</a>
+            <a class="button button-secondary" href="{{ url_for('notes.list_notes') }}">View all notes</a>
+        </div>
+    </section>
 
-    <a href="{{ url_for('notes.upload_note') }}">
-        <button>Upload Note</button>
-    </a>
+    <section class="stats-grid">
+        <article class="stat-card">
+            <span>Total Notes</span>
+            <strong>{{ notes|length }}</strong>
+        </article>
 
-    <a href="{{ url_for('notes.list_notes') }}">
-        <button>View All Notes</button>
-    </a>
+        <article class="stat-card">
+            <span>Total Subjects</span>
+            <strong>{{ subject_total }}</strong>
+        </article>
+    </section>
 
-    <form method="GET" action="{{ url_for('notes.search') }}">
+    <form class="search-bar" method="GET" action="{{ url_for('notes.search') }}">
         <input type="search" name="q" placeholder="Search notes" required>
-        <button type="submit">Search</button>
+        <button class="button button-primary" type="submit">Search</button>
     </form>
 
-    <hr>
+    <section class="section-spacing">
+        <div class="section-title">
+            <h2>My Notes</h2>
+            <p>Recent resources you have uploaded.</p>
+        </div>
 
-    <h2>My Notes</h2>
+        {% if notes %}
 
-    {% if notes %}
+            <div class="grid grid-3">
+                {% for note in notes %}
 
-        {% for note in notes %}
+                    <article class="note-card">
+                        <div class="card-meta">
+                            <span>{{ note.subject.name }}</span>
+                            <span>{{ note.category.name }}</span>
+                        </div>
+                        <h3>
+                            <a href="{{ url_for('notes.note_detail', note_id=note.id) }}">
+                                {{ note.title }}
+                            </a>
+                        </h3>
+                        <p>{{ note.description }}</p>
+                        <div class="card-footer">
+                            <span>{{ note.created_at.strftime('%b %d, %Y') if note.created_at else 'Recently' }}</span>
+                            <a href="{{ note.file_url }}" target="_blank">Open file</a>
+                        </div>
+                    </article>
 
-            <article>
-                <h3>
-                    <a href="{{ url_for('notes.note_detail', note_id=note.id) }}">
-                        {{ note.title }}
-                    </a>
-                </h3>
-                <p>{{ note.description }}</p>
-                <p>{{ note.subject.name }} / {{ note.category.name }}</p>
-                <a href="{{ note.file_url }}" target="_blank">Open file</a>
-                <p>Created at: {{ note.created_at }}</p>
-            </article>
+                {% endfor %}
+            </div>
 
-            <hr>
+        {% else %}
 
-        {% endfor %}
+            <div class="empty-state">
+                <h3>No notes yet</h3>
+                <p>Upload your first resource to start building your academic library.</p>
+                <a class="button button-primary" href="{{ url_for('notes.upload_note') }}">Upload note</a>
+            </div>
 
-    {% else %}
-
-        <p>You have not uploaded notes yet.</p>
-
-    {% endif %}
-
-</body>
-
-</html>
+        {% endif %}
+    </section>
+{% endblock %}

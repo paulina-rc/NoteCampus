@@ -1,13 +1,26 @@
-<form method="POST">
+{% extends "base.html" %}
 
-    <input type="text" name="username" placeholder="Username" required>
+{% block title %}Register | StudyShare{% endblock %}
 
-    <input type="email" name="email" placeholder="Email" required>
+{% block content %}
+    <section class="auth-layout">
+        <div class="auth-panel">
+            <p class="eyebrow">Join StudyShare</p>
+            <h1>Create account</h1>
+            <p class="muted">Start uploading and organizing academic material with your classmates.</p>
 
-    <input type="password" name="password" placeholder="Password" required>
+            <form class="form-card" method="POST">
+                <label for="username">Username</label>
+                <input id="username" type="text" name="username" placeholder="paulina" required>
 
-    <button type="submit">
-        Register
-    </button>
+                <label for="email">Email</label>
+                <input id="email" type="email" name="email" placeholder="you@example.com" required>
 
-</form>
+                <label for="password">Password</label>
+                <input id="password" type="password" name="password" placeholder="Create a password" required>
+
+                <button class="button button-primary button-full" type="submit">Register</button>
+            </form>
+        </div>
+    </section>
+{% endblock %}

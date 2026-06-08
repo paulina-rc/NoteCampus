@@ -1,43 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notes</title>
-</head>
+{% block title %}Notes | StudyShare{% endblock %}
 
-<body>
+{% block content %}
+    <section class="page-heading">
+        <div>
+            <p class="eyebrow">Library</p>
+            <h1>Notes by Subject</h1>
+            <p class="muted">Explore study resources grouped by academic area and category.</p>
+        </div>
 
-    <h1>Notes by Subject</h1>
+        <a class="button button-primary" href="{{ url_for('notes.upload_note') }}">Upload note</a>
+    </section>
 
-    <a href="{{ url_for('notes.upload_note') }}">
-        <button>Upload Note</button>
-    </a>
-
-    <form method="GET" action="{{ url_for('notes.search') }}">
+    <form class="search-bar" method="GET" action="{{ url_for('notes.search') }}">
         <input type="search" name="q" placeholder="Search notes" required>
-        <button type="submit">Search</button>
+        <button class="button button-primary" type="submit">Search</button>
     </form>
-
-    <hr>
 
     {% if subjects %}
 
         {% for subject in subjects %}
 
-            <section>
-                <h2>
-                    <a href="{{ url_for('subjects.subject_detail', subject_id=subject.id) }}">
-                        {{ subject.name }}
-                    </a>
-                </h2>
-
-                <p>{{ subject.description }}</p>
+            <section class="subject-band">
+                <div class="section-title">
+                    <h2>
+                        <a href="{{ url_for('subjects.subject_detail', subject_id=subject.id) }}">
+                            {{ subject.name }}
+                        </a>
+                    </h2>
+                    <p>{{ subject.description }}</p>
+                </div>
 
                 {% for category in subject.categories %}
 
-                    <article>
+                    <div class="category-block">
                         <h3>
                             <a href="{{ url_for('subjects.category_detail', category_id=category.id) }}">
                                 {{ category.name }}
@@ -46,41 +43,47 @@
 
                         {% if category.notes %}
 
-                            {% for note in category.notes %}
+                            <div class="grid grid-3">
+                                {% for note in category.notes %}
 
-                                <div>
-                                    <h4>
-                                        <a href="{{ url_for('notes.note_detail', note_id=note.id) }}">
-                                            {{ note.title }}
-                                        </a>
-                                    </h4>
-                                    <p>{{ note.description }}</p>
-                                    <p>Uploaded by: {{ note.author.username }}</p>
-                                    <a href="{{ note.file_url }}" target="_blank">Open file</a>
-                                </div>
+                                    <article class="note-card">
+                                        <div class="card-meta">
+                                            <span>{{ subject.name }}</span>
+                                            <span>{{ category.name }}</span>
+                                        </div>
+                                        <h4>
+                                            <a href="{{ url_for('notes.note_detail', note_id=note.id) }}">
+                                                {{ note.title }}
+                                            </a>
+                                        </h4>
+                                        <p>{{ note.description }}</p>
+                                        <div class="card-footer">
+                                            <span>{{ note.author.username }}</span>
+                                            <span>{{ note.created_at.strftime('%b %d, %Y') if note.created_at else 'Recently' }}</span>
+                                        </div>
+                                    </article>
 
-                            {% endfor %}
+                                {% endfor %}
+                            </div>
 
                         {% else %}
 
-                            <p>No notes in this category yet.</p>
+                            <p class="muted">No notes in this category yet.</p>
 
                         {% endif %}
-                    </article>
+                    </div>
 
                 {% endfor %}
             </section>
-
-            <hr>
 
         {% endfor %}
 
     {% else %}
 
-        <p>There are no subjects yet.</p>
+        <div class="empty-state">
+            <h2>No subjects yet</h2>
+            <p>Subjects will appear here when they are available.</p>
+        </div>
 
     {% endif %}
-
-</body>
-
-</html>
+{% endblock %}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}StudyShare{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <nav class="navbar">
+            <a class="brand" href="{{ url_for('home') }}">
+                <span class="brand-mark">S</span>
+                <span>StudyShare</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="{{ url_for('notes.list_notes') }}">Notes</a>
+                <a href="{{ url_for('subjects.list_subjects') }}">Subjects</a>
+
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('auth.dashboard') }}">Dashboard</a>
+                    <a href="{{ url_for('notes.upload_note') }}">Upload</a>
+                {% endif %}
+            </div>
+
+            <div class="user-actions">
+                {% if current_user.is_authenticated %}
+                    <span class="user-chip">{{ current_user.username }}</span>
+                    <a class="button button-secondary" href="{{ url_for('auth.logout') }}">Logout</a>
+                {% else %}
+                    <a class="button button-secondary" href="{{ url_for('auth.login') }}">Login</a>
+                    <a class="button button-primary" href="{{ url_for('auth.register') }}">Register</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <main class="page-shell">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <p>StudyShare helps students organize, discover, and share academic material.</p>
+    </footer>
+
+</body>
+
+</html>

@@ -1,62 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Results</title>
-</head>
+{% block title %}Search Results | StudyShare{% endblock %}
 
-<body>
+{% block content %}
+    <section class="page-heading">
+        <div>
+            <p class="eyebrow">Search</p>
+            <h1>Search Results</h1>
+            {% if query %}
+                <p class="muted">Results for "{{ query }}".</p>
+            {% else %}
+                <p class="muted">Enter a search term to find notes by title or description.</p>
+            {% endif %}
+        </div>
+    </section>
 
-    <h1>Search Results</h1>
-
-    <form method="GET" action="{{ url_for('notes.search') }}">
+    <form class="search-bar" method="GET" action="{{ url_for('notes.search') }}">
         <input type="search" name="q" placeholder="Search notes" value="{{ query }}" required>
-        <button type="submit">Search</button>
+        <button class="button button-primary" type="submit">Search</button>
     </form>
-
-    <hr>
 
     {% if query %}
 
-        <p>Results for: {{ query }}</p>
-
         {% if notes %}
 
-            {% for note in notes %}
+            <section class="grid grid-3 section-spacing">
+                {% for note in notes %}
 
-                <article>
-                    <h2>
-                        <a href="{{ url_for('notes.note_detail', note_id=note.id) }}">
-                            {{ note.title }}
-                        </a>
-                    </h2>
-                    <p>{{ note.description }}</p>
-                    <p>Uploaded by: {{ note.author.username }}</p>
-                    <p>{{ note.subject.name }} / {{ note.category.name }}</p>
-                    <a href="{{ note.file_url }}" target="_blank">Open file</a>
-                    <p>Created at: {{ note.created_at }}</p>
-                </article>
+                    <article class="note-card">
+                        <div class="card-meta">
+                            <span>{{ note.subject.name }}</span>
+                            <span>{{ note.category.name }}</span>
+                        </div>
+                        <h2>
+                            <a href="{{ url_for('notes.note_detail', note_id=note.id) }}">
+                                {{ note.title }}
+                            </a>
+                        </h2>
+                        <p>{{ note.description }}</p>
+                        <div class="card-footer">
+                            <span>{{ note.author.username }}</span>
+                            <span>{{ note.created_at.strftime('%b %d, %Y') if note.created_at else 'Recently' }}</span>
+                        </div>
+                    </article>
 
-                <hr>
-
-            {% endfor %}
+                {% endfor %}
+            </section>
 
         {% else %}
 
-            <p>No notes matched your search.</p>
+            <div class="empty-state">
+                <h2>No results</h2>
+                <p>No notes matched your search.</p>
+                <a class="button button-secondary" href="{{ url_for('notes.list_notes') }}">Back to notes</a>
+            </div>
 
         {% endif %}
 
     {% else %}
 
-        <p>Enter a search term to find notes.</p>
+        <div class="empty-state">
+            <h2>Start searching</h2>
+            <p>Use the search bar to find notes by title or description.</p>
+        </div>
 
     {% endif %}
-
-    <a href="{{ url_for('notes.list_notes') }}">Back to notes</a>
-
-</body>
-
-</html>
+{% endblock %}

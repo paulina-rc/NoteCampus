@@ -1,28 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudyShare</title>
-</head>
+{% block title %}StudyShare{% endblock %}
 
-<body>
+{% block content %}
+    <section class="hero">
+        <div class="hero-content">
+            <p class="eyebrow">Academic notes, organized</p>
+            <h1>Study smarter. Share faster.</h1>
+            <p class="hero-copy">
+                Build a shared library of notes, guides, summaries, and study resources organized by subject and category.
+            </p>
 
-    <h1>StudyShare</h1>
+            <div class="hero-actions">
+                <a class="button button-primary" href="{{ url_for('auth.register') }}">Create account</a>
+                <a class="button button-secondary" href="{{ url_for('auth.login') }}">Login</a>
+            </div>
+        </div>
+    </section>
 
-    <p>Share notes. Learn together.</p>
+    <section class="grid grid-3 section-spacing">
+        <article class="card">
+            <span class="card-kicker">Organize</span>
+            <h2>Subjects and categories</h2>
+            <p>Browse material through a clean academic structure that keeps resources easy to find.</p>
+        </article>
 
-    <hr>
+        <article class="card">
+            <span class="card-kicker">Discover</span>
+            <h2>Search notes quickly</h2>
+            <p>Find useful study material by title or description when deadlines start getting loud.</p>
+        </article>
 
-    <a href="/register">
-        <button>Register</button>
-    </a>
-
-    <a href="/login">
-        <button>Login</button>
-    </a>
-
-</body>
-
-</html>
+        <article class="card">
+            <span class="card-kicker">Share</span>
+            <h2>Upload resources</h2>
+            <p>Contribute links to notes and guides so classmates can learn from each other.</p>
+        </article>
+    </section>
+{% endblock %}

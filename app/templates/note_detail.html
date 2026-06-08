@@ -1,31 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ note.title }}</title>
-</head>
+{% block title %}{{ note.title }} | StudyShare{% endblock %}
 
-<body>
+{% block content %}
+    <article class="detail-layout">
+        <div class="detail-main">
+            <p class="eyebrow">{{ note.subject.name }} / {{ note.category.name }}</p>
+            <h1>{{ note.title }}</h1>
+            <p class="detail-description">{{ note.description }}</p>
 
-    <h1>{{ note.title }}</h1>
+            <div class="detail-actions">
+                <a class="button button-primary" href="{{ note.file_url }}" target="_blank">Open file</a>
+                <a class="button button-secondary" href="{{ url_for('notes.list_notes') }}">Back to notes</a>
+            </div>
+        </div>
 
-    <p>{{ note.description }}</p>
+        <aside class="detail-sidebar">
+            <div>
+                <span>Author</span>
+                <strong>{{ note.author.username }}</strong>
+            </div>
 
-    <hr>
+            <div>
+                <span>Subject</span>
+                <strong>{{ note.subject.name }}</strong>
+            </div>
 
-    <p>Author: {{ note.author.username }}</p>
-    <p>Subject: {{ note.subject.name }}</p>
-    <p>Category: {{ note.category.name }}</p>
-    <p>Created at: {{ note.created_at }}</p>
+            <div>
+                <span>Category</span>
+                <strong>{{ note.category.name }}</strong>
+            </div>
 
-    <a href="{{ note.file_url }}" target="_blank">Open file</a>
+            <div>
+                <span>Created At</span>
+                <strong>{{ note.created_at.strftime('%b %d, %Y') if note.created_at else 'Recently' }}</strong>
+            </div>
 
-    <hr>
-
-    <a href="{{ url_for('notes.list_notes') }}">Back to notes</a>
-
-</body>
-
-</html>
+            <div>
+                <span>File URL</span>
+                <a href="{{ note.file_url }}" target="_blank">{{ note.file_url }}</a>
+            </div>
+        </aside>
+    </article>
+{% endblock %}

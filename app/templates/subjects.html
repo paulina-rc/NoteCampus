@@ -1,42 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Subjects</title>
-</head>
+{% block title %}Subjects | StudyShare{% endblock %}
 
-<body>
-
-    <h1>Subjects</h1>
+{% block content %}
+    <section class="page-heading">
+        <div>
+            <p class="eyebrow">Explore</p>
+            <h1>Subjects</h1>
+            <p class="muted">Choose an academic area and browse its categories and notes.</p>
+        </div>
+    </section>
 
     {% if subjects %}
 
-        {% for subject in subjects %}
+        <section class="grid grid-4">
+            {% for subject in subjects %}
 
-            <article>
-                <h2>
-                    <a href="{{ url_for('subjects.subject_detail', subject_id=subject.id) }}">
-                        {{ subject.name }}
-                    </a>
-                </h2>
+                <article class="subject-card">
+                    <span class="subject-icon">{{ subject.name[:1] }}</span>
+                    <h2>
+                        <a href="{{ url_for('subjects.subject_detail', subject_id=subject.id) }}">
+                            {{ subject.name }}
+                        </a>
+                    </h2>
 
-                <p>{{ subject.description }}</p>
-                <p>Categories: {{ subject.categories|length }}</p>
-                <p>Notes: {{ subject.notes|length }}</p>
-            </article>
+                    <p>{{ subject.description }}</p>
+                    <div class="card-footer">
+                        <span>{{ subject.categories|length }} categories</span>
+                        <span>{{ subject.notes|length }} notes</span>
+                    </div>
+                </article>
 
-            <hr>
-
-        {% endfor %}
+            {% endfor %}
+        </section>
 
     {% else %}
 
-        <p>There are no subjects yet.</p>
+        <div class="empty-state">
+            <h2>No subjects yet</h2>
+            <p>Subjects will appear here when they are available.</p>
+        </div>
 
     {% endif %}
-
-</body>
-
-</html>
+{% endblock %}

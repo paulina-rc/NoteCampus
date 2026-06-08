@@ -1,52 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload Note</title>
-</head>
+{% block title %}Upload Note | StudyShare{% endblock %}
 
-<body>
+{% block content %}
+    <section class="page-heading">
+        <div>
+            <p class="eyebrow">Contribute</p>
+            <h1>Upload Note</h1>
+            <p class="muted">Add a useful academic resource and organize it by subject and category.</p>
+        </div>
+    </section>
 
-    <h1>Upload Note</h1>
+    <section class="form-shell">
+        <form class="form-card" method="POST">
+            <label for="title">Title</label>
+            <input id="title" type="text" name="title" placeholder="Intro to Python loops" required>
 
-    <form method="POST">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" placeholder="Short summary of what this note includes" required></textarea>
 
-        <input type="text" name="title" placeholder="Title" required>
+            <label for="file_url">File URL</label>
+            <input id="file_url" type="url" name="file_url" placeholder="https://example.com/note.pdf" required>
 
-        <textarea name="description" placeholder="Description" required></textarea>
+            <label for="subject_id">Subject</label>
+            <select id="subject_id" name="subject_id" required>
+                <option value="">Select subject</option>
 
-        <input type="url" name="file_url" placeholder="File URL" required>
+                {% for subject in subjects %}
+                    <option value="{{ subject.id }}">{{ subject.name }}</option>
+                {% endfor %}
+            </select>
 
-        <select name="subject_id" required>
-            <option value="">Select subject</option>
+            <label for="category_id">Category</label>
+            <select id="category_id" name="category_id" required>
+                <option value="">Select category</option>
 
-            {% for subject in subjects %}
-                <option value="{{ subject.id }}">{{ subject.name }}</option>
-            {% endfor %}
-        </select>
+                {% for category in categories %}
+                    <option value="{{ category.id }}">
+                        {{ category.subject.name }} - {{ category.name }}
+                    </option>
+                {% endfor %}
+            </select>
 
-        <select name="category_id" required>
-            <option value="">Select category</option>
-
-            {% for category in categories %}
-                <option value="{{ category.id }}">
-                    {{ category.subject.name }} - {{ category.name }}
-                </option>
-            {% endfor %}
-        </select>
-
-        <button type="submit">
-            Upload Note
-        </button>
-
-    </form>
-
-    <hr>
-
-    <a href="{{ url_for('auth.dashboard') }}">Back to dashboard</a>
-
-</body>
-
-</html>
+            <div class="form-actions">
+                <button class="button button-primary" type="submit">Upload note</button>
+                <a class="button button-secondary" href="{{ url_for('auth.dashboard') }}">Cancel</a>
+            </div>
+        </form>
+    </section>
+{% endblock %}
