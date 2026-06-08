@@ -9,7 +9,7 @@
 
 <body>
 
-    <h1>Notes</h1>
+    <h1>Notes by Subject</h1>
 
     <a href="{{ url_for('notes.upload_note') }}">
         <button>Upload Note</button>
@@ -17,17 +17,50 @@
 
     <hr>
 
-    {% if notes %}
+    {% if subjects %}
 
-        {% for note in notes %}
+        {% for subject in subjects %}
 
-            <article>
-                <h2>{{ note.title }}</h2>
-                <p>{{ note.description }}</p>
-                <p>Uploaded by: {{ note.author.username }}</p>
-                <a href="{{ note.file_url }}" target="_blank">Open file</a>
-                <p>Created at: {{ note.created_at }}</p>
-            </article>
+            <section>
+                <h2>
+                    <a href="{{ url_for('subjects.subject_detail', subject_id=subject.id) }}">
+                        {{ subject.name }}
+                    </a>
+                </h2>
+
+                <p>{{ subject.description }}</p>
+
+                {% for category in subject.categories %}
+
+                    <article>
+                        <h3>
+                            <a href="{{ url_for('subjects.category_detail', category_id=category.id) }}">
+                                {{ category.name }}
+                            </a>
+                        </h3>
+
+                        {% if category.notes %}
+
+                            {% for note in category.notes %}
+
+                                <div>
+                                    <h4>{{ note.title }}</h4>
+                                    <p>{{ note.description }}</p>
+                                    <p>Uploaded by: {{ note.author.username }}</p>
+                                    <a href="{{ note.file_url }}" target="_blank">Open file</a>
+                                </div>
+
+                            {% endfor %}
+
+                        {% else %}
+
+                            <p>No notes in this category yet.</p>
+
+                        {% endif %}
+                    </article>
+
+                {% endfor %}
+            </section>
 
             <hr>
 
@@ -35,7 +68,7 @@
 
     {% else %}
 
-        <p>There are no notes yet.</p>
+        <p>There are no subjects yet.</p>
 
     {% endif %}
 

@@ -4,35 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>{{ category.name }}</title>
 </head>
 
 <body>
 
-    <h1>Welcome to StudyShare</h1>
+    <h1>{{ category.name }}</h1>
 
-    <p>You are logged in as {{ user.username }}.</p>
+    <p>{{ category.description }}</p>
+    <p>Subject: {{ category.subject.name }}</p>
 
-    <a href="{{ url_for('notes.upload_note') }}">
-        <button>Upload Note</button>
-    </a>
-
-    <a href="{{ url_for('notes.list_notes') }}">
-        <button>View All Notes</button>
+    <a href="{{ url_for('subjects.subject_detail', subject_id=category.subject.id) }}">
+        Back to {{ category.subject.name }}
     </a>
 
     <hr>
 
-    <h2>My Notes</h2>
+    <h2>Notes</h2>
 
-    {% if notes %}
+    {% if category.notes %}
 
-        {% for note in notes %}
+        {% for note in category.notes %}
 
             <article>
                 <h3>{{ note.title }}</h3>
                 <p>{{ note.description }}</p>
-                <p>{{ note.subject.name }} / {{ note.category.name }}</p>
+                <p>Uploaded by: {{ note.author.username }}</p>
                 <a href="{{ note.file_url }}" target="_blank">Open file</a>
                 <p>Created at: {{ note.created_at }}</p>
             </article>
@@ -43,7 +40,7 @@
 
     {% else %}
 
-        <p>You have not uploaded notes yet.</p>
+        <p>No notes in this category yet.</p>
 
     {% endif %}
 

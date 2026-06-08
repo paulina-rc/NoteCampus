@@ -16,16 +16,22 @@ def create_app():
     login_manager.login_view = "auth.login"
 
     from app.models.user import User
+    from app.models.subject import Subject
+    from app.models.category import Category
     from app.models.note import Note
 
     with app.app_context():
         db.create_all()
+        from app.seed import seed_initial_data
+        seed_initial_data()
 
     from app.routes.auth import auth
     from app.routes.notes import notes
+    from app.routes.subjects import subjects
 
     app.register_blueprint(auth)
     app.register_blueprint(notes)
+    app.register_blueprint(subjects)
 
     @app.route("/")
     def home():

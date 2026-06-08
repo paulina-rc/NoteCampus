@@ -27,6 +27,18 @@ class Note(db.Model):
         nullable=False
     )
 
+    subject_id = db.Column(
+        db.Integer,
+        db.ForeignKey("subjects.id"),
+        nullable=False
+    )
+
+    category_id = db.Column(
+        db.Integer,
+        db.ForeignKey("categories.id"),
+        nullable=False
+    )
+
     created_at = db.Column(
         db.DateTime,
         server_default=db.func.now()
