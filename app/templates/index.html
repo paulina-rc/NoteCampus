@@ -3,38 +3,34 @@
 {% block title %}StudyShare{% endblock %}
 
 {% block content %}
-    <section class="hero">
-        <div class="hero-content">
-            <p class="eyebrow">Academic notes, organized</p>
-            <h1>Study smarter. Share faster.</h1>
-            <p class="hero-copy">
-                Build a shared library of notes, guides, summaries, and study resources organized by subject and category.
-            </p>
-
-            <div class="hero-actions">
-                <a class="button button-primary" href="{{ url_for('auth.register') }}">Create account</a>
-                <a class="button button-secondary" href="{{ url_for('auth.login') }}">Login</a>
-            </div>
+    <section class="section-spacing" style="text-align: center; padding: 3rem 0;">
+        <h1>Study smarter</h1>
+        <p style="color: var(--color-muted); font-size: 1.1rem; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+            Organize your academic notes by subject and category. Discover resources shared by your classmates. Build your study library.
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a class="button button-primary" href="{{ url_for('auth.register') }}">Create account</a>
+            <a class="button button-secondary" href="{{ url_for('auth.login') }}">Login</a>
         </div>
     </section>
 
     <section class="grid grid-3 section-spacing">
         <article class="card">
             <span class="card-kicker">Organize</span>
-            <h2>Subjects and categories</h2>
-            <p>Browse material through a clean academic structure that keeps resources easy to find.</p>
+            <h3>Subjects and categories</h3>
+            <p>Browse material through a clean academic structure.</p>
         </article>
 
         <article class="card">
             <span class="card-kicker">Discover</span>
-            <h2>Search notes quickly</h2>
-            <p>Find useful study material by title or description when deadlines start getting loud.</p>
+            <h3>Search notes</h3>
+            <p>Find study material when you need it by title or description.</p>
         </article>
 
         <article class="card">
             <span class="card-kicker">Share</span>
-            <h2>Upload resources</h2>
-            <p>Contribute links to notes and guides so classmates can learn from each other.</p>
+            <h3>Upload resources</h3>
+            <p>Contribute links to notes so classmates can learn together.</p>
         </article>
     </section>
 {% endblock %}

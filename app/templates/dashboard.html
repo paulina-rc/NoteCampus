@@ -7,46 +7,23 @@
 
     <section class="page-heading">
         <div>
-            <p class="eyebrow">Dashboard</p>
             <h1>Welcome back, {{ user.username }}</h1>
-            <p class="muted">Manage your academic resources and keep your shared notes organized.</p>
         </div>
-
-        <div class="heading-actions">
-            <a class="button button-primary" href="{{ url_for('notes.upload_note') }}">Upload note</a>
-            <a class="button button-secondary" href="{{ url_for('profile.profile_view') }}">My Profile</a>
-            <a class="button button-secondary" href="{{ url_for('notes.list_notes') }}">View all notes</a>
-        </div>
-    </section>
-
-    <section class="stats-grid">
-        <article class="stat-card">
-            <span>Total Notes</span>
-            <strong>{{ notes|length }}</strong>
-        </article>
-
-        <article class="stat-card">
-            <span>Total Subjects</span>
-            <strong>{{ subject_total }}</strong>
-        </article>
     </section>
 
     <form class="search-bar" method="GET" action="{{ url_for('notes.search') }}">
-        <input type="search" name="q" placeholder="Search notes" required>
+        <input type="search" name="q" placeholder="Search your notes..." required>
         <button class="button button-primary" type="submit">Search</button>
     </form>
 
     <section class="section-spacing">
         <div class="section-title">
-            <h2>My Notes</h2>
-            <p>Recent resources you have uploaded.</p>
+            <h2>Recent notes</h2>
         </div>
 
         {% if notes %}
-
             <div class="grid grid-3">
-                {% for note in notes %}
-
+                {% for note in notes[:6] %}
                     <article class="note-card">
                         <div class="card-meta">
                             <span>{{ note.subject.name }}</span>
@@ -60,29 +37,60 @@
                         <p>{{ note.description }}</p>
                         <div class="card-footer">
                             <span>{{ note.created_at.strftime('%b %d, %Y') if note.created_at else 'Recently' }}</span>
-                            <a href="{{ note.file_url }}" target="_blank">Open file</a>
+                            <a href="{{ note.file_url }}" target="_blank">Open</a>
                         </div>
-
                         <div class="card-actions">
                             <a class="button button-secondary" href="{{ url_for('notes.edit_note', note_id=note.id) }}">Edit</a>
-
                             <form method="POST" action="{{ url_for('notes.delete_note', note_id=note.id) }}">
                                 <button class="button button-danger" type="submit">Delete</button>
                             </form>
                         </div>
                     </article>
-
                 {% endfor %}
             </div>
-
         {% else %}
-
             <div class="empty-state">
                 <h3>No notes yet</h3>
-                <p>Upload your first resource to start building your academic library.</p>
+                <p>Start by uploading your first study resource.</p>
                 <a class="button button-primary" href="{{ url_for('notes.upload_note') }}">Upload note</a>
             </div>
-
         {% endif %}
+    </section>
+
+    <section class="section-spacing">
+        <div class="section-title">
+            <h2>Subjects</h2>
+        </div>
+
+        {% set subjects = user.notes|map(attribute='subject')|unique|list %}
+        {% if subjects %}
+            <div class="grid grid-3">
+                {% for subject in subjects[:6] %}
+                    <article class="subject-card">
+                        <h3>
+                            <a href="{{ url_for('subjects.subject_detail', subject_id=subject.id) }}">
+                                {{ subject.name }}
+                            </a>
+                        </h3>
+                        <p>{{ subject.description }}</p>
+                        <div class="card-footer">
+                            <a href="{{ url_for('subjects.subject_detail', subject_id=subject.id) }}">View</a>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </section>
+
+    <section class="section-spacing">
+        <div class="section-title">
+            <h2>Quick actions</h2>
+        </div>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <a class="button button-primary" href="{{ url_for('notes.upload_note') }}">Upload note</a>
+            <a class="button button-secondary" href="{{ url_for('notes.list_notes') }}">Browse all notes</a>
+            <a class="button button-secondary" href="{{ url_for('subjects.list_subjects') }}">All subjects</a>
+            <a class="button button-secondary" href="{{ url_for('profile.profile_view') }}">My profile</a>
+        </div>
     </section>
 {% endblock %}
