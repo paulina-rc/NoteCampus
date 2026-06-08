@@ -1,7 +1,6 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-from flask import Flask, render_template
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -13,16 +12,20 @@ def create_app():
 
     db.init_app(app)
 
-    # login_manager.init_app(app)
+    login_manager.init_app(app)
+    login_manager.login_view = "auth.login"
 
     from app.models.user import User
+    from app.models.note import Note
 
     with app.app_context():
         db.create_all()
 
     from app.routes.auth import auth
+    from app.routes.notes import notes
 
     app.register_blueprint(auth)
+    app.register_blueprint(notes)
 
     @app.route("/")
     def home():
