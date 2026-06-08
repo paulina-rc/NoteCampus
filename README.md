@@ -1,70 +1,100 @@
-# StudyShare
+# NoteCampus
 
-A **note-sharing platform** for students — browse, share and discover study notes organized by subject and grade level. Built with pure HTML, CSS and JavaScript.
-> Currently a front-end design. Full functionality (backend, database, user accounts) is coming soon.
+NoteCampus is a web platform where students can organize, share, and discover study notes from different subjects.
+
+The project started as a personal learning exercise while exploring web development with Flask and Python, and gradually evolved into a complete application with user accounts, subjects, categories, and note management.
+
 ---
 
-## Preview
-> A clean, modern landing page where students can find popular notes by subject and grade, explore categories, and leave comments.
+## Features
+
+* User registration and login
+* User profiles
+* Create, edit, and delete notes
+* Organize content by subjects and categories
+* Search notes
+* Browse shared study material
+* User ownership and permissions system
+
 ---
 
-## What's on the Page
+## Tech Stack
 
-| Section | Description |
-|---------|-------------|
-|  Navbar | Logo + navigation links (Home, Subjects, Grades, About) |
-|  Hero | Main headline with a call-to-action button |
-|  Popular Notes | Cards showing the most visited notes by grade |
-|  Subjects | Clickable category cards (Math, Science, History, etc.) |
-|  Comments | Form to leave comments, displayed live on the page |
+* Python
+* Flask
+* SQLAlchemy
+* SQLite
+* HTML
+* CSS
+
 ---
 
-##  Design Highlights
+## Getting Started
 
-- **Color palette** — purple/pink gradients with yellow accents
-- **Smooth hover effects** on cards and buttons (`translateY`, `box-shadow`)
-- **CSS Grid** for responsive note and subject layouts
-- **Rounded pill buttons** with gradient backgrounds
-- **Fully responsive** — mobile layout with stacked hero section
----
-##  Tech Stack
+Clone the repository:
 
-- **HTML5** — Semantic structure
-- **CSS3** — Custom styling, gradients, grid, transitions
-- **Vanilla JavaScript** — DOM events, comment form logic
+```bash
+git clone https://github.com/paulina-rc/NoteCampus.git
+```
+
+Enter the project folder:
+
+```bash
+cd NoteCampus
+```
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Run the application:
+
+```bash
+python run.py
+```
+
+Open your browser and visit:
+
+```text
+http://127.0.0.1:5000
+```
+
 ---
+
 ## Project Structure
 
-```
-StudyShare/
+```text
+NoteCampus/
 │
-├── examentecnico.html    # Main page
-├── examentecnico.css     # All styles
-└── README.md
+├── app/
+│   ├── models/
+│   ├── routes/
+│   ├── static/
+│   └── templates/
+│
+├── config.py
+├── run.py
+└── requirements.txt
 ```
----
-
-## How to Run
-No installation needed. Just open the file in your browser:
-```bash
-# Option 1 — double click
-examentecnico.html
-
-# Option 2 — with VS Code Live Server
-Right click → Open with Live Server
-```
----
-
-## Future Plans
-
-- [ ] Connect to a backend (Flask or Node.js)
-- [ ] User registration and login
-- [ ] Upload and download real notes (PDF)
-- [ ] Search bar by subject, grade or keyword
-- [ ] Rating system for notes 
-- [ ] Save comments to a database
 
 ---
+
+## Why I Built This
+
+I created NoteCampus to practice and improve my skills in:
+
+* Web development with Flask
+* Database design
+* Authentication and authorization
+* Application architecture
+* Full-stack development fundamentals
+
+As I continue learning, I plan to keep expanding the project with new features and improvements.
+
+---
+
 ## Author
 
-**Paulina Rojas** — [@paulina-rc](https://github.com/paulina-rc)
+Paulina Rojas — @paulina-rc
