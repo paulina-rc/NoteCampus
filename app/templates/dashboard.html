@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Dashboard | StudyShare{% endblock %}
+{% block title %}Dashboard | NoteCampus{% endblock %}
 
 {% block content %}
     {% set subject_total = notes|map(attribute='subject_id')|unique|list|length %}
