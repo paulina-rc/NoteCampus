@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}{{ user.username }}'s Profile | StudyShare{% endblock %}
+
+{% block content %}
+    <section class="page-heading">
+        <div>
+            <p class="eyebrow">Profile</p>
+            <h1>{{ user.username }}</h1>
+            <p class="muted">Your account information and academic activity.</p>
+        </div>
+
+        <div class="heading-actions">
+            <a class="button button-primary" href="{{ url_for('profile.edit_profile') }}">Edit Profile</a>
+            <a class="button button-secondary" href="{{ url_for('auth.dashboard') }}">Back to Dashboard</a>
+        </div>
+    </section>
+
+    <section class="stats-grid">
+        <article class="stat-card">
+            <span>Username</span>
+            <strong>{{ user.username }}</strong>
+        </article>
+
+        <article class="stat-card">
+            <span>Email</span>
+            <strong>{{ user.email }}</strong>
+        </article>
+
+        <article class="stat-card">
+            <span>Member Since</span>
+            <strong>{{ user.created_at.strftime('%b %d, %Y') if user.created_at else 'Recently' }}</strong>
+        </article>
+
+        <article class="stat-card">
+            <span>Total Notes</span>
+            <strong>{{ total_notes }}</strong>
+        </article>
+
+        <article class="stat-card">
+            <span>Total Subjects</span>
+            <strong>{{ total_subjects }}</strong>
+        </article>
+    </section>
+
+    <section class="section-spacing">
+        <div class="section-title">
+            <h2>Recent Notes</h2>
+            <p>Your latest academic resources.</p>
+        </div>
+
+        {% if recent_notes %}
+
+            <div class="grid grid-3">
+                {% for note in recent_notes %}
+
+                    <article class="note-card">
+                        <div class="card-meta">
+                            <span>{{ note.subject.name }}</span>
+                            <span>{{ note.category.name }}</span>
+                        </div>
+                        <h3>
+                            <a href="{{ url_for('notes.note_detail', note_id=note.id) }}">
+                                {{ note.title }}
+                            </a>
+                        </h3>
+                        <p>{{ note.description }}</p>
+                        <div class="card-footer">
+                            <span>{{ note.created_at.strftime('%b %d, %Y') if note.created_at else 'Recently' }}</span>
+                            <a href="{{ note.file_url }}" target="_blank">Open file</a>
+                        </div>
+
+                        <div class="card-actions">
+                            <a class="button button-secondary" href="{{ url_for('notes.edit_note', note_id=note.id) }}">Edit</a>
+
+                            <form method="POST" action="{{ url_for('notes.delete_note', note_id=note.id) }}">
+                                <button class="button button-danger" type="submit">Delete</button>
+                            </form>
+                        </div>
+                    </article>
+
+                {% endfor %}
+            </div>
+
+        {% else %}
+
+            <div class="empty-state">
+                <h3>No notes yet</h3>
+                <p>Upload your first resource to start building your academic library.</p>
+                <a class="button button-primary" href="{{ url_for('notes.upload_note') }}">Upload note</a>
+            </div>
+
+        {% endif %}
+    </section>
+{% endblock %}

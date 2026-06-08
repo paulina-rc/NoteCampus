@@ -489,6 +489,28 @@ select:focus {
     text-align: center;
 }
 
+.error-message {
+    background: #fff1ed;
+    border: 1px solid #ffd1c7;
+    border-radius: var(--radius);
+    padding: var(--space-md);
+    margin-bottom: var(--space-md);
+    color: #b53d25;
+}
+
+.error-message p {
+    margin: 0;
+    font-weight: 600;
+}
+
+.error-text {
+    display: block;
+    color: #b53d25;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 0.35rem;
+}
+
 @media (max-width: 900px) {
     .navbar,
     .page-heading,

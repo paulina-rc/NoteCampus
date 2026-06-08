@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Profile | StudyShare{% endblock %}
+
+{% block content %}
+    <section class="page-heading">
+        <div>
+            <p class="eyebrow">Account Settings</p>
+            <h1>Edit Profile</h1>
+            <p class="muted">Update your username and email address.</p>
+        </div>
+    </section>
+
+    <section class="form-shell">
+        <form class="form-card" method="POST">
+            {% if errors.get('general') %}
+                <div class="error-message">
+                    <p>{{ errors['general'] }}</p>
+                </div>
+            {% endif %}
+
+            <label for="username">Username</label>
+            <input 
+                id="username" 
+                type="text" 
+                name="username" 
+                value="{{ user.username }}"
+                placeholder="Enter your username"
+                required
+            >
+            {% if errors.get('username') %}
+                <span class="error-text">{{ errors['username'] }}</span>
+            {% endif %}
+
+            <label for="email">Email</label>
+            <input 
+                id="email" 
+                type="email" 
+                name="email" 
+                value="{{ user.email }}"
+                placeholder="Enter your email address"
+                required
+            >
+            {% if errors.get('email') %}
+                <span class="error-text">{{ errors['email'] }}</span>
+            {% endif %}
+
+            <div class="form-actions">
+                <button class="button button-primary" type="submit">Save changes</button>
+                <a class="button button-secondary" href="{{ url_for('profile.profile_view') }}">Cancel</a>
+            </div>
+        </form>
+    </section>
+{% endblock %}

@@ -29,7 +29,7 @@
 
             <div class="user-actions">
                 {% if current_user.is_authenticated %}
-                    <span class="user-chip">{{ current_user.username }}</span>
+                    <a href="{{ url_for('profile.profile_view') }}" class="user-chip">{{ current_user.username }}</a>
                     <a class="button button-secondary" href="{{ url_for('auth.logout') }}">Logout</a>
                 {% else %}
                     <a class="button button-secondary" href="{{ url_for('auth.login') }}">Login</a>

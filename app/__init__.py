@@ -28,10 +28,12 @@ def create_app():
     from app.routes.auth import auth
     from app.routes.notes import notes
     from app.routes.subjects import subjects
+    from app.routes.profile import profile
 
     app.register_blueprint(auth)
     app.register_blueprint(notes)
     app.register_blueprint(subjects)
+    app.register_blueprint(profile)
 
     @app.route("/")
     def home():
