@@ -61,6 +61,14 @@
                             <span>{{ note.created_at.strftime('%b %d, %Y') if note.created_at else 'Recently' }}</span>
                             <a href="{{ note.file_url }}" target="_blank">Open file</a>
                         </div>
+
+                        <div class="card-actions">
+                            <a class="button button-secondary" href="{{ url_for('notes.edit_note', note_id=note.id) }}">Edit</a>
+
+                            <form method="POST" action="{{ url_for('notes.delete_note', note_id=note.id) }}">
+                                <button class="button button-danger" type="submit">Delete</button>
+                            </form>
+                        </div>
                     </article>
 
                 {% endfor %}

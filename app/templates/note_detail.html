@@ -13,6 +13,16 @@
                 <a class="button button-primary" href="{{ note.file_url }}" target="_blank">Open file</a>
                 <a class="button button-secondary" href="{{ url_for('notes.list_notes') }}">Back to notes</a>
             </div>
+
+            {% if current_user.is_authenticated and current_user.id == note.user_id %}
+                <div class="detail-actions">
+                    <a class="button button-secondary" href="{{ url_for('notes.edit_note', note_id=note.id) }}">Edit Note</a>
+
+                    <form method="POST" action="{{ url_for('notes.delete_note', note_id=note.id) }}">
+                        <button class="button button-danger" type="submit">Delete Note</button>
+                    </form>
+                </div>
+            {% endif %}
         </div>
 
         <aside class="detail-sidebar">

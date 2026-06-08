@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Note | StudyShare{% endblock %}
+
+{% block content %}
+    <section class="page-heading">
+        <div>
+            <p class="eyebrow">Manage note</p>
+            <h1>Edit Note</h1>
+            <p class="muted">Update the note details, academic classification, or file link.</p>
+        </div>
+    </section>
+
+    <section class="form-shell">
+        <form class="form-card" method="POST">
+            <label for="title">Title</label>
+            <input id="title" type="text" name="title" value="{{ note.title }}" required>
+
+            <label for="description">Description</label>
+            <textarea id="description" name="description" required>{{ note.description }}</textarea>
+
+            <label for="file_url">File URL</label>
+            <input id="file_url" type="url" name="file_url" value="{{ note.file_url }}" required>
+
+            <label for="subject_id">Subject</label>
+            <select id="subject_id" name="subject_id" required>
+                {% for subject in subjects %}
+                    <option value="{{ subject.id }}" {% if subject.id == note.subject_id %}selected{% endif %}>
+                        {{ subject.name }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <label for="category_id">Category</label>
+            <select id="category_id" name="category_id" required>
+                {% for category in categories %}
+                    <option value="{{ category.id }}" {% if category.id == note.category_id %}selected{% endif %}>
+                        {{ category.subject.name }} - {{ category.name }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <div class="form-actions">
+                <button class="button button-primary" type="submit">Save changes</button>
+                <a class="button button-secondary" href="{{ url_for('notes.note_detail', note_id=note.id) }}">Cancel</a>
+            </div>
+        </form>
+    </section>
+{% endblock %}

@@ -222,6 +222,18 @@ button {
     color: var(--color-primary);
 }
 
+.button-danger {
+    background: #fff1ed;
+    border-color: #ffd1c7;
+    color: #b53d25;
+}
+
+.button-danger:hover {
+    background: #b53d25;
+    border-color: #b53d25;
+    color: white;
+}
+
 .button-full {
     width: 100%;
 }
@@ -302,13 +314,24 @@ button {
 }
 
 .card-meta,
-.card-footer {
+.card-footer,
+.card-actions {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: var(--space-sm);
     color: var(--color-muted);
     font-size: 0.9rem;
+}
+
+.card-actions {
+    justify-content: flex-start;
+    margin-top: var(--space-md);
+}
+
+.card-actions form,
+.detail-actions form {
+    margin: 0;
 }
 
 .card-meta span {
@@ -523,7 +546,8 @@ select:focus {
     }
 
     .card-footer,
-    .card-meta {
+    .card-meta,
+    .card-actions {
         align-items: flex-start;
         flex-direction: column;
     }
