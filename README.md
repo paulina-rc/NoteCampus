@@ -4,17 +4,6 @@ NoteCampus is a web platform where students can organize, share, and discover st
 
 The project started as a personal learning exercise while exploring web development with Flask and Python, and gradually evolved into a complete application with user accounts, subjects, categories, and note management.
 
----
-
-## Features
-
-* User registration and login
-* User profiles
-* Create, edit, and delete notes
-* Organize content by subjects and categories
-* Search notes
-* Browse shared study material
-* User ownership and permissions system
 
 ---
 
